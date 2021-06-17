@@ -5,12 +5,12 @@
     "main": "server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "export DB_HOST=127.0.0.1 && export DB_PORT=3306 && export DB_USER=service-user && export GOOGLE_APPLICATION_CREDENTIALS=viergewinnt-ss21-0768b24ca13d.json && export DB_NAME=db_1 && node server.js",
-        "start:proxy": "../cloud_sql_proxy -instances=viergewinnt-ss21:europe-west3:db-viergewinnt=tcp:3306",
+        "start": "export DB_HOST=127.0.0.1 && export DB_PORT=3306 && export DB_USER=service-user && export GOOGLE_APPLICATION_CREDENTIALS=viergewinnt-terminplaner-af91fc2a47e3.json && export DB_NAME=planner && node server.js",
+        "start:proxy": "../cloud_sql_proxy -instances=viergewinnt-terminplaner:europe-west3:db-terminplaner=tcp:3306",
         "docker:build": "docker build -t viergewinnt/backend:master .",
         "docker:run": "docker run --name backend --rm -p 8000:8000 viergewinnt/backend:master"
     },
-    "author": "Mike Peters",
+    "author": "Julian Graeber",
     "license": "ISC",
     "engines": {
         "node": "^14"
@@ -20,12 +20,13 @@
         "cors": "^2.8.5",
         "ejs": "^3.1.6",
         "express": "^4.17.1",
-        "express-session": "^1.17.2",
-        "firebase": "^8.6.3",
+        "firebase": "^8.6.7",
+        "firebase-admin": "^9.9.0",
+        "firebase-functions": "^3.14.1",
+        "gcp-metadata": "^4.1.0",
+        "google-auth-library": "^7.0.0",
         "multer": "^1.4.2",
         "mysql": "^2.18.1",
-        "passport": "^0.4.1",
-        "passport-google-oauth": "^2.0.0",
         "pug": "^3.0.0"
     },
     "devDependencies": {

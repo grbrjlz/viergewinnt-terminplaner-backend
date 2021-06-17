@@ -1,0 +1,13 @@
+
+{
+  "type": "service_account",
+  "project_id": "viergewinnt-terminplaner",
+  "private_key_id": "af91fc2a47e3d38aeadb23f05bc3fe28292963c7",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9DrqegfHRVoYy\nRlLQ0TKgnUAjnmgnMBIHDC4B4+p+iuqT+vCRuYlMlI5kR1kkSAH67gGd/LIHeO3Z\n6sNdtt4YcMxxsh/+yWqZttYD7w+NxgM9xDIYCDKZW23k/1ZsF+dqtxtbJzQp00Q0\n4rSNV/yAHw8r65ZVRqcRrRXyX5lv6PrGOKjDMivilEoZJ1CO8bEV7Q3tMH2GoyYH\nyHAbsemRKpFUUaIqyti9HHmehD3lZFLfzQtnJyENcOwmDZTU3RV67QvBHH18000X\nUYJuN47b7nuzPu8kPCB5JgPv9dX9XNK+EUPneTrWIMMz6hd7wmejeiQqVUV+xWDV\nVtrU4strAgMBAAECggEAQ8kmLHMXCyHk193TD8ASUPhQ6PSBD5vyusgpLtBTYa/Z\nT9mnq/hEPEr/iwDx+0o+O4Re3BCgnIFFdt7v0Yghtc2r4BAn3KjHKfoeXia3AvQ+\ncUUJWQiHa+kWTAcpK3SequqgSlySHXT8faHTbuJfTGjWfb7olgbRHEtdFRwl3bOi\nZ/qNkVt2mCIPkZUNU9kyQs4ReuEqVCYKTux9IoUSMXcsjpds6c4M0PZxWDelIrOE\n2p33b87bzNkURKNF2eyolRvkgdRnCp6qblXJElRE6dsQHSc0UTBXaIWgzUkwCNR9\ndYk75Hb4v1+mjOpjs3F6T9RA+E/7OwaweGHUEyW7UQKBgQD3ru/WLD6ZQBeZNoaS\nKQXO/YdsXJnUwY2ky9rcLYj8mrFK/WP4Ky4XApO8mkGac9SofZdHpfm4DulpFu4u\ncvJy4hZJMfZVsDVEvwWOyzfKpmDDVN2DPxHm6Xo2NN9QZKHoINjDNX+LemWbAURw\nXtcB5z86fLEQsuOZb2WgvnjSlwKBgQDDZ9mdtWEsJKt0HpAb13r+I0m3V/OewR1H\nTuXMax44LEGPUFOTt3VKOevU7xIOSyPQfcOnlXGG74dkDmibHu5rwaUKnmQ5HEgK\nmZ42RDlGrk8ZQyxkgR/Cc+D0X+wr2N8a4G64Xp9mS7Y2M7nuhIOID4YN/pls9SxT\nKd3UYyKsTQKBgQCA+Njuf0+BYXxoTZo5VZ8ur5nq9TUtMjRdkcE/UX65epvDXrrF\nqUZwuOjRFsn+cT5VFkDGEEk+bJViIYyZJ0XUSKIuLxQEfqLeT1HHj05X+db9H53R\nD/B0ezMmMtXt+NjOFPyKebsWl/98fWZz1Q7EcPPdsrxI473cUcNrtoMXtQKBgHhb\nzBeu8+aLw6unc54ikJhexfYPT3iWfGFCwJqz1A5HfC45DPGsi6snmBI1G0sAj1PJ\nUy0zCJVTjnJbyaTaXYKz6ONsglEHEXyt+Fx2k0zs6r2luX9CZXyRgZskRkUPtQRJ\n/wjDB62rrtUd8UVwC9BPt4OBMaGCNkYXQJKkaWP1AoGBANhOQbgN224EnRb4Ohkd\nFoLDGbhJzmYfZtkHnH9ub37IIsNF5R/5AdXoB/P17SzHv6824upnp4653JQNd3cf\nbz1lR5t1qzlSJHH25L6T4pqQUPkH3BxtM7eezPXU+wNORZoimKZx0XRAlbhGt4jy\nwDF5w0UQu8J1OYuPvGOQfHst\n-----END PRIVATE KEY-----\n",
+  "client_email": "service-user@viergewinnt-terminplaner.iam.gserviceaccount.com",
+  "client_id": "118369808409791206734",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/service-user%40viergewinnt-terminplaner.iam.gserviceaccount.com"
+}

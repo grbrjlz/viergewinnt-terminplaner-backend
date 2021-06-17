@@ -1,35 +1,63 @@
 const express = require('express');
 const app = express();
-const session = require('express-session');
-const passport = require('passport');
+const admin = require('firebase-admin');
+const firebase = require('firebase');
+var cors = require('cors')
 
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const GOOGLE_CLIENT_ID = '59333616719-t471v43rg8gkhrd7bouh3p24hl44b8sd.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = 'BEn5a94H9fju04Vnu15zchj9';
+app.use(cors());
 
-var userProfile;
+admin.initializeApp();
 
-app.set('view engine', 'ejs');
-
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  secret: 'SECRET' 
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.get('/', function(req, res) {
-  res.render('pages/auth');
-});
-app.get('/success', (req, res) => res.send(userProfile));
-app.get('/error', (req, res) => res.send("error logging in"));
-
-passport.serializeUser(function(user, cb) {
-    cb(null, user);
+firebase.initializeApp({
+    apiKey: "AIzaSyBJRoAs4F5OIv2Xij2PPWj0ad1UHaYKuBg",
+    authDomain: "viergewinnt-terminplaner.firebaseapp.com",
+    projectId: "viergewinnt-terminplaner",
+    storageBucket: "viergewinnt-terminplaner.appspot.com",
+    messagingSenderId: "59333616719",
+    appId: "1:59333616719:web:5b84bb99d64282df4fb63a"
   });
-passport.deserializeUser(function(obj, cb) {
-cb(null, obj);
+
+async function verifyToken (request) {
+  try {
+    const token = await getToken(request);
+
+    console.log("token: ", token);
+
+    if (!token) {
+      return false;
+    }
+
+    const payload = await admin.auth().verifyIdToken(token);
+    console.log(payload);
+    return payload !== null;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+}
+
+async function getToken (request) {
+  if (!request.headers.authorization) {
+    return undefined;
+  }
+
+  const token = request.headers.authorization.replace(/^Bearer\s/, '');
+
+  return token;
+}
+
+app.post('/Login', async function(req, res) {
+    res.set("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.set("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
+    res.set('Content-Type','application/json');
+    res.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+    console.log("Function Started")
+    console.log(req.method);
+    verified = await verifyToken(req)
+  
+    console.log("verify response: ", verified);
+    res.status(200).send(`Hello ${verified}`).end();
+  
 });
 
 const PORT = process.env.PORT || 8000;
@@ -37,33 +65,3 @@ const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`);
 });
-
-
-/*  Google AUTH  */
-passport.use(new GoogleStrategy({
-    clientID: GOOGLE_CLIENT_ID,
-    clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:8000/auth/google/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-      userProfile=profile;
-      return done(null, userProfile);
-  }
-));
- 
-app.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile', 'email'] }));
- 
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/error' }),
-  function(req, res) {
-    // Successful authentication, redirect success.
-    res.redirect('/success');
-});
-
-
-
-
-
-
-
