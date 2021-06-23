@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const firebase = require('firebase');
+const admin = require('firebase-admin')
 var cors = require('cors')
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser')
@@ -9,7 +10,7 @@ const dotenv = require('dotenv').config();
 app.use(cors());
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-
+admin.initializeApp();
 firebase.initializeApp({
     apiKey: "AIzaSyBJRoAs4F5OIv2Xij2PPWj0ad1UHaYKuBg",
     authDomain: "viergewinnt-terminplaner.firebaseapp.com",
@@ -82,8 +83,7 @@ app.post('/Login', async function(req, res) {
   res.set("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
   res.set('Content-Type','application/json');
   res.set('Acxcess-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
-  console.log("Function Started")
-  console.log(req.method);
+
   verified = await verifyToken(req)
   console.log("verify response: ", verified);
   res.status(200).send(`Hello ${verified}`).end();
@@ -102,5 +102,4 @@ const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`);
-    console.log(process.env.TOKEN_SECRET)
 });
