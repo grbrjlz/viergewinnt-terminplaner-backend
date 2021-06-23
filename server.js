@@ -6,10 +6,13 @@ var cors = require('cors')
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv').config();
+const cookieParser = require("cookie-parser");
 
 app.use(cors());
+app.use(cookieParser())
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 admin.initializeApp();
 firebase.initializeApp({
     apiKey: "AIzaSyBJRoAs4F5OIv2Xij2PPWj0ad1UHaYKuBg",
@@ -25,7 +28,7 @@ async function verifyToken (request) {
   try {
     const token = await getToken(request);
 
-    console.log("token: ", token);
+    //console.log("token: ", token);
 
     if (!token) {
       return false;
@@ -82,7 +85,7 @@ app.post('/Login', async function(req, res) {
   res.set("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
   res.set("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
   res.set('Content-Type','application/json');
-  res.set('Acxcess-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.set('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
 
   verified = await verifyToken(req)
   console.log("verify response: ", verified);
@@ -91,11 +94,21 @@ app.post('/Login', async function(req, res) {
 
 app.post('/create', urlencodedParser, async function(req,res) {
   const jwttoken = generateAccessToken({username: req.body.username});
-  res.json(jwttoken);
+  res.writeHead(200, {
+      "Set-Cookie": `token=${jwttoken}; HttpOnly`,
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Origin": "http://localhost:4200" // für live auf bucket url ändern
+  })
+  .send();
 })
 
-app.get('/check', authenticateToken, (req, res) => {
-  res.send('check')
+app.get('/check', (req, res) => {
+  console.log(req.cookies)
+  if (!req.cookies.token) {
+    return res.status(401).send()
+  } else {
+    return res.send('cookie gesetzt')
+  }
 })
 
 const PORT = process.env.PORT || 8000;
