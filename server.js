@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const firebase = require('firebase');
 const admin = require('firebase-admin')
-var cors = require('cors')
+const cors = require('cors')
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv').config();
@@ -28,8 +28,6 @@ async function verifyToken (request) {
   try {
     const token = await getToken(request);
 
-    //console.log("token: ", token);
-
     if (!token) {
       return false;
     }
@@ -54,29 +52,15 @@ async function getToken (request) {
   return token;
 }
 
-// TODO: JWT Token erstellen -> im cookie speichern -> 
-//       cookie in browser speichern -> von function auslesen 
-
 // generate JWT Token
 function generateAccessToken(username) {
   return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '1800s' });
 }
 
 // authenticate JWT Token
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
-
-  if (token == null) return res.sendStatus(401)
-
+function authenticateToken(token) {
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
     console.log(err)
-
-    if (err) return res.sendStatus(403)
-
-    req.user = user
-    console.log(user)
-    next()
   })
 }
 
@@ -92,6 +76,7 @@ app.post('/Login', async function(req, res) {
   res.status(200).send(`Hello ${verified}`).end();
 });
 
+// create JWT Token + set Cookie
 app.post('/create', urlencodedParser, async function(req,res) {
   const jwttoken = generateAccessToken({username: req.body.username});
   res.writeHead(200, {
@@ -102,13 +87,21 @@ app.post('/create', urlencodedParser, async function(req,res) {
   .send();
 })
 
+// read Cookie + verify JWT Token
 app.get('/check', (req, res) => {
-  console.log(req.cookies)
-  if (!req.cookies.token) {
-    return res.status(401).send()
-  } else {
-    return res.send('cookie gesetzt')
-  }
+  res.set("Access-Control-Allow-Credentials", true);
+  res.set("Access-Control-Allow-Origin", "http://localhost:4200");
+  
+  const token =req.cookies['token']
+  console.log(token)
+
+  jwt.verify(token, process.env.TOKEN_SECRET, (err) => {
+    if (err) {
+      return res.status(401).send()
+    } else {
+      return res.status(200).send()
+    }
+  })
 })
 
 const PORT = process.env.PORT || 8000;
